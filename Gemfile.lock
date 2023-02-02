@@ -3,7 +3,7 @@ PATH
   specs:
     rack_session_redis (0.1.0)
       rack-session (>= 0.2.0)
-      redis (>= 4.6.0)
+      redis (>= 4.6.0, < 5.0.0)
 
 GEM
   remote: https://rubygems.org/

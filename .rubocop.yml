@@ -43,11 +43,14 @@ Style/AndOr:
   Enabled: false
 Style/BlockDelimiters:
   Exclude:
-    - spec/**/*_spec.rb
+    - test/**/*
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/GlobalVars:
+  Exclude:
+    - test/**/*
 Style/GuardClause:
   Enabled: false
 Style/IfUnlessModifier:
@@ -56,6 +59,9 @@ Style/MultilineBlockChain:
   Enabled: false
 Style/NumericPredicate:
   Enabled: false
+Style/OpenStructUse:
+  Exclude:
+    - test/**/*
 Style/PercentLiteralDelimiters:
   Enabled: false
 Style/SafeNavigation:
