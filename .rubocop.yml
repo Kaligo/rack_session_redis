@@ -81,6 +81,3 @@ Layout/LineLength:
   Max: 200
 Lint/AmbiguousBlockAssociation:
   Enabled: false
-
-Minitest/AssertRaisesCompoundBody:
-  Enabled: false # seems to have an issue in CI, disabling this cop for now
