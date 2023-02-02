@@ -21,13 +21,13 @@ class Redis
         end
 
         if @addresses.size > 1
-          ::Redis::DistributedStore.new @addresses, @options
+          raise 'Multiple Redis servers are not supported'
         else
           ::Redis::Store.new @addresses.first.merge(@options)
         end
       end
 
-      def self.resolve(uri) # :api: private
+      def self.resolve(uri)
         if uri.is_a?(Hash)
           extract_host_options_from_hash(uri)
         else
@@ -61,7 +61,7 @@ class Redis
         options.keys.any? { |n| %i[host db port path].include?(n) }
       end
 
-      def self.extract_host_options_from_uri(uri)
+      def self.extract_host_options_from_uri(uri) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
         uri = URI.parse(uri)
         if uri.scheme == 'unix'
           options = { path: uri.path }

@@ -21,7 +21,7 @@ Metrics/AbcSize:
   Max: 25
 Metrics/BlockLength:
   Exclude:
-    - spec/**/*
+    - test/**/*
     - rack_session_redis.gemspec
 Metrics/CyclomaticComplexity:
   Max: 10
@@ -51,6 +51,8 @@ Style/FrozenStringLiteralComment:
 Style/GuardClause:
   Enabled: false
 Style/IfUnlessModifier:
+  Enabled: false
+Style/MultilineBlockChain:
   Enabled: false
 Style/NumericPredicate:
   Enabled: false

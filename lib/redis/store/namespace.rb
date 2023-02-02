@@ -1,6 +1,6 @@
 class Redis
   class Store < self
-    module Namespace
+    module Namespace # rubocop:disable Metrics/ModuleLength
       FLUSHDB_BATCH_SIZE = 1000
 
       def set(key, *args)
