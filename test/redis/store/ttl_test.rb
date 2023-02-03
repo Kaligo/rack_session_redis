@@ -5,7 +5,6 @@ class MockRedis
     @sets = []
     @setexes = []
     @setnxes = []
-    @expires = []
   end
 
   def set(*a)
@@ -30,25 +29,6 @@ class MockRedis
 
   def has_setnx?(*a)
     @setnxes.include?(a)
-  end
-
-  def multi(&block)
-    instance_eval do
-      def setnx(*a)
-        @setnxes << a
-      end
-
-      block.call(self)
-    end
-  end
-  alias_method :pipelined, :multi
-
-  def expire(*a)
-    @expires << a
-  end
-
-  def has_expire?(*a)
-    @expires.include?(a)
   end
 end
 
