@@ -11,7 +11,7 @@ class Redis
 
       def setnx(key, value, options = nil)
         if (ttl = expires_in(options))
-          setnx_with_expire(key, value, ttl.to_i, options)
+          setnx_with_expire(key, value, ttl.to_i)
         else
           super(key, value)
         end
@@ -19,11 +19,8 @@ class Redis
 
       protected
 
-      def setnx_with_expire(key, value, ttl, options = {})
-        with_multi_or_pipelined(options) do |transaction|
-          transaction.setnx(key, value, raw: true)
-          transaction.expire(key, ttl)
-        end
+      def setnx_with_expire(key, value, ttl)
+        set(key, value, ex: ttl, nx: true, raw: true)
       end
 
       private
@@ -33,12 +30,6 @@ class Redis
           # Rack::Session           Merb                    Rails/Sinatra
           options[:expire_after] || options[:expires_in] || options[:expire_in]
         end
-      end
-
-      def with_multi_or_pipelined(options, &block)
-        return pipelined(&block) if options.key?(:cluster) || options[:avoid_multi_commands]
-
-        multi(&block)
       end
     end
   end
