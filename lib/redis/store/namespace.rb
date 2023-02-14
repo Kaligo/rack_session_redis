@@ -1,6 +1,6 @@
 class Redis
   class Store < self
-    module Namespace # rubocop:disable Metrics/ModuleLength
+    module Namespace
       FLUSHDB_BATCH_SIZE = 1000
 
       def set(key, *args)
@@ -23,46 +23,11 @@ class Redis
         namespace(key) { |k| super(k, *args) }
       end
 
-      def exists(*keys)
-        super(*keys.map { |key| interpolate(key) })
-      end
-
-      def exists?(*keys)
-        super(*keys.map { |key| interpolate(key) })
-      end
-
-      def incrby(key, increment)
-        namespace(key) { |k| super(k, increment) }
-      end
-
-      def decrby(key, increment)
-        namespace(key) { |k| super(k, increment) }
-      end
-
       def keys(pattern = '*')
         namespace(pattern) { |p| super(p).map { |key| strip_namespace(key) } }
       end
 
-      def scan(cursor, match: nil, **kwargs)
-        if match
-          namespace(match) do |pattern|
-            cursor, keys = super(cursor, match: pattern, **kwargs)
-            [cursor, keys.map { |key| strip_namespace(key) }]
-          end
-        else
-          super(cursor, **kwargs)
-        end
-      end
-
       def del(*keys)
-        super(*keys.map { |key| interpolate(key) }) if keys.any?
-      end
-
-      def unlink(*keys)
-        super(*keys.map { |key| interpolate(key) }) if keys.any?
-      end
-
-      def watch(*keys)
         super(*keys.map { |key| interpolate(key) }) if keys.any?
       end
 
@@ -78,88 +43,8 @@ class Redis
         end
       end
 
-      def expire(key, ttl)
-        namespace(key) { |k| super(k, ttl) }
-      end
-
-      def hdel(key, *fields)
-        namespace(key) { |k| super(k, *fields) }
-      end
-
-      def hget(key, field)
-        namespace(key) { |k| super(k, field) }
-      end
-
-      def hgetall(key)
-        namespace(key) { |k| super(k) }
-      end
-
-      def hexists(key, field)
-        namespace(key) { |k| super(k, field) }
-      end
-
-      def hincrby(key, field, increment)
-        namespace(key) { |k| super(k, field, increment) }
-      end
-
-      def hincrbyfloat(key, field, increment)
-        namespace(key) { |k| super(k, field, increment) }
-      end
-
-      def hkeys(key)
-        namespace(key) { |k| super(k) }
-      end
-
-      def hlen(key)
-        namespace(key) { |k| super(k) }
-      end
-
-      def hmget(key, *fields, &blk)
-        namespace(key) { |k| super(k, *fields, &blk) }
-      end
-
-      def hmset(key, *attrs)
-        namespace(key) { |k| super(k, *attrs) }
-      end
-
-      def hset(key, *args)
-        namespace(key) { |k| super(k, *args) }
-      end
-
-      def hsetnx(key, field, val)
-        namespace(key) { |k| super(k, field, val) }
-      end
-
-      def hvals(key)
-        namespace(key) { |k| super(k) }
-      end
-
-      def hscan(key, *args)
-        namespace(key) { |k| super(k, *args) }
-      end
-
-      def hscan_each(key, *args)
-        namespace(key) { |k| super(k, *args) }
-      end
-
-      def zincrby(key, increment, member)
-        namespace(key) { |k| super(k, increment, member) }
-      end
-
-      def zscore(key, member)
-        namespace(key) { |k| super(k, member) }
-      end
-
-      def zadd(key, *args)
-        namespace(key) { |k| super(k, *args) }
-      end
-
-      def zrem(key, member)
-        namespace(key) { |k| super(k, member) }
-      end
-
       if respond_to?(:ruby2_keywords, true)
-        ruby2_keywords :set, :setex, :setnx, :hscan, :hscan_each
+        ruby2_keywords :set, :setex, :setnx
       end
 
       def to_s
