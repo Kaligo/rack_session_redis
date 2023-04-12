@@ -6,8 +6,6 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rake', '~> 13.0'
-gem 'rubocop', '~> 1.44'
-gem 'rubocop-minitest', '~> 0.27'
-gem 'minitest', '~> 5.17'
-gem 'mocha', '~> 2.0'
-gem 'connection_pool', '~> 1.2.0'
+gem 'rubocop'
+gem 'rubocop-rspec'
+gem 'rspec'
