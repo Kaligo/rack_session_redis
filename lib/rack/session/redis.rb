@@ -1,6 +1,6 @@
 require 'rack/session/abstract/id'
-require_relative '../../redis/store'
 require_relative '../../rack_session_redis/connection_wrapper'
+require_relative '../../rack_session_redis/store'
 
 module Rack
   module Session

@@ -35,7 +35,7 @@ module RackSessionRedis
     end
 
     def store
-      @store ||= Redis::Store::Factory.create(@options[:redis_server])
+      @store ||= Store.create(@options[:redis_server])
     end
 
     def pool_options
