@@ -1,28 +1,16 @@
-require: rubocop-minitest
+require: rubocop-rspec
 
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
   Exclude:
-    - Gemfile.lock
     - vendor/**/*
-
-Bundler/OrderedGems:
-  Enabled: false
-
-Gemspec/RequiredRubyVersion:
-  Enabled: false
-
-Layout/ArgumentAlignment:
-  EnforcedStyle: with_fixed_indentation
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
 
 Metrics/AbcSize:
   Max: 25
 Metrics/BlockLength:
   Exclude:
-    - test/**/*
+    - spec/**/*
     - rack_session_redis.gemspec
 Metrics/CyclomaticComplexity:
   Max: 10
@@ -31,53 +19,22 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 10
 
-Naming/VariableNumber:
+RSpec/ExampleLength:
   Enabled: false
-Naming/PredicateName:
+RSpec/ExpectInHook:
   Enabled: false
-Naming/MethodParameterName:
+RSpec/MessageSpies:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/NamedSubject:
+  Enabled: false
+RSpec/StubbedMock:
   Enabled: false
 
-Style/Alias:
-  EnforcedStyle: prefer_alias_method
-Style/AndOr:
+# NOTE: we need to replicate existing functionality of redis-store
+Security/MarshalLoad:
   Enabled: false
-Style/BlockDelimiters:
-  Exclude:
-    - test/**/*
+
 Style/Documentation:
-  Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
-Style/GlobalVars:
-  Exclude:
-    - test/**/*
-Style/GuardClause:
-  Enabled: false
-Style/IfUnlessModifier:
-  Enabled: false
-Style/MultilineBlockChain:
-  Enabled: false
-Style/NumericPredicate:
-  Enabled: false
-Style/OpenStructUse:
-  Exclude:
-    - test/**/*
-Style/PercentLiteralDelimiters:
-  Enabled: false
-Style/SafeNavigation:
-  Enabled: false
-Style/StringLiterals:
-  EnforcedStyle: single_quotes
-Style/SpecialGlobalVars:
-  Enabled: false
-Style/TrailingUnderscoreVariable:
-  Enabled: false
-Style/WordArray:
-  EnforcedStyle: percent
-Style/ZeroLengthPredicate:
-  Enabled: false
-Layout/LineLength:
-  Max: 200
-Lint/AmbiguousBlockAssociation:
   Enabled: false

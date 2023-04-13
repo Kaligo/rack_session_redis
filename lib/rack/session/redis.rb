@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+require 'English'
 require 'rack/session/abstract/id'
 require_relative '../../rack_session_redis/connection_wrapper'
 require_relative '../../rack_session_redis/store'
@@ -35,7 +38,7 @@ module Rack
           [generate_sid, {}]
         else
           with_lock(req, [nil, {}]) do
-            unless sid and (session = get_session_with_fallback(sid))
+            unless sid && (session = get_session_with_fallback(sid))
               session = {}
               sid = generate_unique_sid(session)
             end
@@ -71,7 +74,7 @@ module Rack
       rescue Errno::ECONNREFUSED
         if $VERBOSE
           warn "#{self} is unable to find Redis server."
-          warn $!.inspect
+          warn $ERROR_INFO.inspect
         end
         default
       ensure
