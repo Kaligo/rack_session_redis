@@ -21,28 +21,16 @@ module Rack
         @conn = RackSessionRedis::ConnectionWrapper.new(@default_options)
       end
 
-      def generate_unique_sid(session)
-        return generate_sid if session.empty?
-
-        loop do
-          sid = generate_sid
-          first = with do |c|
-            [*c.setnx(sid.private_id, session, @default_options.to_hash)].first
-          end
-          break sid if [1, true].include?(first)
-        end
-      end
-
       def find_session(req, sid)
         if req.session.options[:skip]
           [generate_sid, {}]
         else
           with_lock(req, [nil, {}]) do
-            unless sid && (session = get_session_with_fallback(sid))
-              session = {}
-              sid = generate_unique_sid(session)
+            if sid && (session = get_session_with_fallback(sid))
+              [sid, session]
+            else
+              [generate_sid, {}]
             end
-            [sid, session]
           end
         end
       end
@@ -68,6 +56,12 @@ module Rack
         @default_options.fetch(:threadsafe, true)
       end
 
+      private
+
+      def get_session_with_fallback(sid)
+        with { |c| c.get(sid.private_id) || c.get(sid.public_id) }
+      end
+
       def with_lock(_req, default = nil)
         @mutex.lock if threadsafe?
         yield
@@ -83,12 +77,6 @@ module Rack
 
       def with(&block)
         @conn.with(&block)
-      end
-
-      private
-
-      def get_session_with_fallback(sid)
-        with { |c| c.get(sid.private_id) || c.get(sid.public_id) }
       end
     end
   end

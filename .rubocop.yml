@@ -6,6 +6,10 @@ AllCops:
   Exclude:
     - vendor/**/*
 
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*
+
 Metrics/AbcSize:
   Max: 25
 Metrics/BlockLength:
@@ -26,6 +30,8 @@ RSpec/ExpectInHook:
 RSpec/MessageSpies:
   Enabled: false
 RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
   Enabled: false
 RSpec/NamedSubject:
   Enabled: false
