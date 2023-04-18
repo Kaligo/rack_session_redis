@@ -14,11 +14,13 @@ RSpec.describe RackSessionRedis::Store do
 
       before do
         expect(Redis).to receive(:new).with(url: URI(url)).and_return(redis)
-        expect(described_class).to receive(:new)
-          .with(redis: redis, prefix: 'sessions').and_return(store)
       end
 
-      it { is_expected.to eq(store) }
+      it 'creates store using default namespace' do
+        expect(described_class).to receive(:new)
+          .with(redis: redis, prefix: 'sessions').and_return(store)
+        expect(subject).to eq store
+      end
     end
 
     context 'when URL contains namespace' do
@@ -27,11 +29,13 @@ RSpec.describe RackSessionRedis::Store do
       before do
         expect(Redis).to receive(:new)
           .with(url: URI('redis://localhost:6379/0')).and_return(redis)
-        expect(described_class).to receive(:new)
-          .with(redis: redis, prefix: 'rack_session').and_return(store)
       end
 
-      it { is_expected.to eq(store) }
+      it 'creates store with specified namespace' do
+        expect(described_class).to receive(:new)
+          .with(redis: redis, prefix: 'rack_session').and_return(store)
+        expect(subject).to eq store
+      end
     end
   end
 
@@ -48,12 +52,12 @@ RSpec.describe RackSessionRedis::Store do
       subject { store.set('key', { a: 1 }) }
 
       it 'sets the value correctly' do
-        expect(redis).to receive(:set).with('rack_session:key', data, ex: described_class::DEFAULT_EXPIRES_IN)
-                                      .and_call_original
-
         expect do
           subject
         end.to change { redis.get('rack_session:key') }.from(nil).to(data)
+
+        expires_in = described_class::DEFAULT_EXPIRES_IN
+        expect(redis.ttl('rack_session:key')).to be_between(expires_in - 10, expires_in)
       end
     end
 
@@ -63,12 +67,11 @@ RSpec.describe RackSessionRedis::Store do
       let(:expires_in) { 3600 }
 
       it 'sets the value correctly' do
-        expect(redis).to receive(:set).with('rack_session:key', data, ex: expires_in)
-                                      .and_call_original
-
         expect do
           subject
         end.to change { redis.get('rack_session:key') }.from(nil).to(data)
+
+        expect(redis.ttl('rack_session:key')).to be_between(expires_in - 10, expires_in)
       end
     end
   end

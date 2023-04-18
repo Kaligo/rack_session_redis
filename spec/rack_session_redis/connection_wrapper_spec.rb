@@ -22,13 +22,16 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
       it { is_expected.to be_a(described_class) }
     end
 
-    context 'when redis_store is provided and is not a Redis::Store' do
+    context 'when redis_store is provided and is not a RackSessionRedis::Store' do
       let(:redis_store) { 'not a redis store' }
 
       it 'raises an ArgumentError' do
         expect do
           wrapper
-        end.to raise_error(ArgumentError, 'redis_store must be an instance of Redis::Store (currently String)')
+        end.to raise_error(
+          ArgumentError,
+          'redis_store must be an instance of RackSessionRedis::Store (currently String)'
+        )
       end
     end
 

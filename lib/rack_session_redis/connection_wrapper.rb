@@ -13,7 +13,7 @@ module RackSessionRedis
 
       return unless @store && !@store.is_a?(RackSessionRedis::Store)
 
-      raise ArgumentError, "redis_store must be an instance of Redis::Store (currently #{@store.class.name})"
+      raise ArgumentError, "redis_store must be an instance of RackSessionRedis::Store (currently #{@store.class.name})"
     end
 
     def with(&block)

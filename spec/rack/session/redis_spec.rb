@@ -38,7 +38,7 @@ RSpec.describe Rack::Session::Redis do
           .and_return(store)
       end
 
-      it 'generates a new session id' do
+      it 'generates a new session id without persisting anything' do
         new_sid, new_session = middleware.find_session(request, sid)
         expect(new_session).to eq({})
         expect(new_sid).not_to eq(sid)
