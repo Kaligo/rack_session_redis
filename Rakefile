@@ -2,12 +2,12 @@
 
 require 'bundler/gem_tasks'
 
-require 'minitest/test_task'
-
-Minitest::TestTask.create
-
 require 'rubocop/rake_task'
+
+require 'rspec/core/rake_task'
 
 RuboCop::RakeTask.new
 
-task default: %i[test rubocop]
+RSpec::Core::RakeTask.new
+
+task default: %i[rubocop spec]
