@@ -28,8 +28,9 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'redis', '>= 4.6.0', '< 5.0.0'
+  spec.add_runtime_dependency 'connection_pool'
   spec.add_runtime_dependency 'rack-session', '>= 0.2.0'
+  spec.add_runtime_dependency 'redis', '>= 4.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
