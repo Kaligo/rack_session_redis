@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in rack_session_redis.gemspec
+# Specify your gem's dependencies in redi_sesh.gemspec
 gemspec
 
 gem 'rake', '~> 13.0'

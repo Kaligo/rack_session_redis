@@ -2,7 +2,7 @@
 
 require 'redis'
 
-module RackSessionRedis
+module RediSesh
   class Store
     DEFAULT_EXPIRES_IN = 60 * 60 * 24 # 1 day
 

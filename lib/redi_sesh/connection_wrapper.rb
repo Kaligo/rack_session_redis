@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RackSessionRedis
+module RediSesh
   class ConnectionWrapper
     POOL_KEYS = %i[pool pool_size pool_timeout].freeze
 
@@ -11,9 +11,9 @@ module RackSessionRedis
 
       raise ArgumentError, 'pool must be an instance of ConnectionPool' if @pool && !@pool.is_a?(ConnectionPool)
 
-      return unless @store && !@store.is_a?(RackSessionRedis::Store)
+      return unless @store && !@store.is_a?(RediSesh::Store)
 
-      raise ArgumentError, "redis_store must be an instance of RackSessionRedis::Store (currently #{@store.class.name})"
+      raise ArgumentError, "redis_store must be an instance of RediSesh::Store (currently #{@store.class.name})"
     end
 
     def with(&block)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rack_session_redis'
+require 'redi_sesh'
 require 'mock_redis'
 
 RSpec.configure do |config|

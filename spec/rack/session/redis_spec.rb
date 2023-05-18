@@ -13,7 +13,7 @@ RSpec.describe Rack::Session::Redis do
       let(:sid) { SecureRandom.hex }
 
       before do
-        expect(RackSessionRedis::Store).not_to receive(:create)
+        expect(RediSesh::Store).not_to receive(:create)
       end
 
       it 'generates a new session id without persisting anything' do
@@ -27,13 +27,13 @@ RSpec.describe Rack::Session::Redis do
       let(:session) { instance_double(Rack::Session::Abstract::SessionHash, options: { skip: false }) }
       let(:request) { instance_double(Rack::Request, session: session) }
       let(:redis) { MockRedis.new }
-      let(:store) { RackSessionRedis::Store.new(redis: redis, prefix: 'rack:session') }
+      let(:store) { RediSesh::Store.new(redis: redis, prefix: 'rack:session') }
       let(:private_id) { SecureRandom.hex }
       let(:public_id) { SecureRandom.hex }
       let(:sid) { instance_double(Rack::Session::SessionId, private_id: private_id, public_id: public_id) }
 
       before do
-        expect(RackSessionRedis::Store).to receive(:create)
+        expect(RediSesh::Store).to receive(:create)
           .with('redis://127.0.0.1:6379/0/rack:session')
           .and_return(store)
       end
@@ -51,13 +51,13 @@ RSpec.describe Rack::Session::Redis do
       let(:session) { instance_double(Rack::Session::Abstract::SessionHash, options: { skip: false }) }
       let(:request) { instance_double(Rack::Request, session: session) }
       let(:redis) { MockRedis.new }
-      let(:store) { RackSessionRedis::Store.new(redis: redis, prefix: 'rack:session') }
+      let(:store) { RediSesh::Store.new(redis: redis, prefix: 'rack:session') }
       let(:private_id) { SecureRandom.hex }
       let(:public_id) { SecureRandom.hex }
       let(:sid) { instance_double(Rack::Session::SessionId, private_id: private_id, public_id: public_id) }
 
       before do
-        expect(RackSessionRedis::Store).to receive(:create)
+        expect(RediSesh::Store).to receive(:create)
           .with('redis://127.0.0.1:6379/0/rack:session').and_return(store)
         store.set(private_id, { a: 1 })
       end
@@ -75,13 +75,13 @@ RSpec.describe Rack::Session::Redis do
   describe '#write_session' do
     let(:request) { instance_double(Rack::Request) }
     let(:redis) { MockRedis.new }
-    let(:store) { RackSessionRedis::Store.new(redis: redis, prefix: 'rack:session') }
+    let(:store) { RediSesh::Store.new(redis: redis, prefix: 'rack:session') }
     let(:private_id) { SecureRandom.hex }
     let(:public_id) { SecureRandom.hex }
     let(:sid) { instance_double(Rack::Session::SessionId, private_id: private_id, public_id: public_id) }
 
     before do
-      expect(RackSessionRedis::Store).to receive(:create)
+      expect(RediSesh::Store).to receive(:create)
         .with('redis://127.0.0.1:6379/0/rack:session').and_return(store)
     end
 
@@ -97,13 +97,13 @@ RSpec.describe Rack::Session::Redis do
 
     let(:request) { instance_double(Rack::Request) }
     let(:redis) { MockRedis.new }
-    let(:store) { RackSessionRedis::Store.new(redis: redis, prefix: 'rack:session') }
+    let(:store) { RediSesh::Store.new(redis: redis, prefix: 'rack:session') }
     let(:private_id) { SecureRandom.hex }
     let(:public_id) { SecureRandom.hex }
     let(:sid) { instance_double(Rack::Session::SessionId, private_id: private_id, public_id: public_id) }
 
     before do
-      expect(RackSessionRedis::Store).to receive(:create)
+      expect(RediSesh::Store).to receive(:create)
         .with('redis://127.0.0.1:6379/0/rack:session').and_return(store)
       store.set(private_id, { a: 1 })
     end
