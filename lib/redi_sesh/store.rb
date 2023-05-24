@@ -49,7 +49,7 @@ module RediSesh
     end
 
     def keys
-      redis.keys.map do |key|
+      redis.keys("#{prefix}:*").map do |key|
         key.delete_prefix("#{prefix}:")
       end
     end
