@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-require_relative 'lib/rack_session_redis/version'
+require_relative 'lib/redi_sesh/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'rack_session_redis'
-  spec.version = RackSessionRedis::VERSION
-  spec.authors = ['Kenneth Teh']
-  spec.email = ['kennethteh90@gmail.com']
+  spec.name = 'redi_sesh'
+  spec.version = RediSesh::VERSION
+  spec.authors = ['Hieu Nguyen', 'Kenneth Teh']
+  spec.email = ['hieu.nguyen@kaligo.com', 'kenneth.teh@kaligo.com']
 
   spec.summary = 'Modified version of Rack::Session::Redis to support Redis 4.6.0 and 5.0.0'
-  spec.homepage = 'https://github.com/kennethteh90/rack_session_redis'
+  spec.homepage = 'https://github.com/Kaligo/redi_sesh'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 2.7.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/kennethteh90/rack_session_redis'
-  spec.metadata['changelog_uri'] = 'https://github.com/kennethteh90/rack_session_redis/blob/master/CHANGELOG.md'
+  spec.metadata['source_code_uri'] = 'https://github.com/Kaligo/redi_sesh'
+  spec.metadata['changelog_uri'] = 'https://github.com/Kaligo/redi_sesh/blob/master/CHANGELOG.md'
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.

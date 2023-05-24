@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RackSessionRedis::Store do
+RSpec.describe RediSesh::Store do
   let(:redis) { MockRedis.new }
   let(:store) { described_class.new(redis: redis, prefix: 'rack_session') }
 

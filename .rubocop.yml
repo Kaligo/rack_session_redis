@@ -15,7 +15,7 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
-    - rack_session_redis.gemspec
+    - redi_sesh.gemspec
 Metrics/CyclomaticComplexity:
   Max: 10
 Metrics/MethodLength:

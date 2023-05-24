@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe RackSessionRedis::ConnectionWrapper do
+RSpec.describe RediSesh::ConnectionWrapper do
   describe '.new' do
     subject(:wrapper) { described_class.new(options) }
 
@@ -22,7 +22,7 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
       it { is_expected.to be_a(described_class) }
     end
 
-    context 'when redis_store is provided and is not a RackSessionRedis::Store' do
+    context 'when redis_store is provided and is not a RediSesh::Store' do
       let(:redis_store) { 'not a redis store' }
 
       it 'raises an ArgumentError' do
@@ -30,13 +30,13 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
           wrapper
         end.to raise_error(
           ArgumentError,
-          'redis_store must be an instance of RackSessionRedis::Store (currently String)'
+          'redis_store must be an instance of RediSesh::Store (currently String)'
         )
       end
     end
 
     context 'when redis_store is provided and is a Redis::Store' do
-      let(:redis_store) { RackSessionRedis::Store.new(redis: MockRedis.new, prefix: 'ss') }
+      let(:redis_store) { RediSesh::Store.new(redis: MockRedis.new, prefix: 'ss') }
 
       it { is_expected.to be_a(described_class) }
     end
@@ -45,7 +45,7 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
   describe '#with' do
     subject(:wrapper) { described_class.new(options) }
 
-    let(:redis_store) { RackSessionRedis::Store.new(redis: MockRedis.new, prefix: 'ss') }
+    let(:redis_store) { RediSesh::Store.new(redis: MockRedis.new, prefix: 'ss') }
     let(:pool) { ConnectionPool.new(size: 1) { redis_store } }
 
     context 'when the wrapper is pooled' do
@@ -72,7 +72,7 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
   describe '#pooled?' do
     subject(:wrapper) { described_class.new(options) }
 
-    let(:redis_store) { RackSessionRedis::Store.new(redis: MockRedis.new, prefix: 'ss') }
+    let(:redis_store) { RediSesh::Store.new(redis: MockRedis.new, prefix: 'ss') }
     let(:pool) { ConnectionPool.new(size: 1) { redis_store } }
 
     context 'when the wrapper is pooled' do
@@ -91,7 +91,7 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
   describe '#pool' do
     subject { described_class.new(options).pool }
 
-    let(:redis_store) { RackSessionRedis::Store.new(redis: MockRedis.new, prefix: 'ss') }
+    let(:redis_store) { RediSesh::Store.new(redis: MockRedis.new, prefix: 'ss') }
     let(:pool) { ConnectionPool.new(size: 1) { redis_store } }
 
     context 'when the wrapper is pooled' do
@@ -116,7 +116,7 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
   describe '#store' do
     subject { described_class.new(options).store }
 
-    let(:redis_store) { RackSessionRedis::Store.new(redis: MockRedis.new, prefix: 'ss') }
+    let(:redis_store) { RediSesh::Store.new(redis: MockRedis.new, prefix: 'ss') }
 
     context 'when the wrapper defines store' do
       let(:options) { { redis_store: redis_store } }
@@ -129,7 +129,7 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
       let(:options) { { redis_server: redis_server } }
 
       before do
-        expect(RackSessionRedis::Store).to receive(:create)
+        expect(RediSesh::Store).to receive(:create)
           .with(redis_server).and_return(redis_store)
       end
 
@@ -140,7 +140,7 @@ RSpec.describe RackSessionRedis::ConnectionWrapper do
   describe '#pool_options' do
     subject { described_class.new(options).pool_options }
 
-    let(:redis_store) { RackSessionRedis::Store.new(redis: MockRedis.new, prefix: 'ss') }
+    let(:redis_store) { RediSesh::Store.new(redis: MockRedis.new, prefix: 'ss') }
     let(:pool) { ConnectionPool.new(size: 1) { redis_store } }
 
     context 'when the wrapper is pooled' do

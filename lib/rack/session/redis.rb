@@ -2,8 +2,8 @@
 
 require 'English'
 require 'rack/session/abstract/id'
-require_relative '../../rack_session_redis/connection_wrapper'
-require_relative '../../rack_session_redis/store'
+require_relative '../../redi_sesh/connection_wrapper'
+require_relative '../../redi_sesh/store'
 
 module Rack
   module Session
@@ -18,7 +18,7 @@ module Rack
         super
 
         @mutex = Mutex.new
-        @conn = RackSessionRedis::ConnectionWrapper.new(@default_options)
+        @conn = RediSesh::ConnectionWrapper.new(@default_options)
       end
 
       def find_session(req, sid)
