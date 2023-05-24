@@ -143,6 +143,8 @@ RSpec.describe RediSesh::Store do
       before do
         redis.set('rack_session:key1', Marshal.dump({ a: 1 }))
         redis.set('rack_session:key2', Marshal.dump({ a: 2 }))
+        redis.set('some_other_namespace:key3', Marshal.dump({ a: 3 }))
+        redis.set('key4', Marshal.dump({ a: 3 }))
       end
 
       it { is_expected.to eq(%w[key1 key2]) }
